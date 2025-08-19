@@ -16,3 +16,8 @@
 
 1. Follow the [Redpanda documentation](https://docs.redpanda.com/current/deploy/deployment-option/self-hosted/manual/production/production-deployment/?tab=tabs-1-debianubuntu)
 2. Edit broker address in `/etc/redpanda/redpanda-console-config.yaml`
+
+### Kubernetes
+
+1. `curl -sfL https://get.k3s.io | sh -s - --disable=traefik`
+2. Copy kubeconfig from `/etc/rancher/k3s/k3s.yaml` (change addresses as required)
