@@ -3798,6 +3798,47 @@ spec:
     subresources:
       status: {}
 ---
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: datasource-mimir
+  namespace: grafana
+  labels:
+    grafana_datasource: "1"
+data:
+  mimir.yaml: |
+    apiVersion: 1
+
+    datasources:
+      - name: Prometheus
+        type: prometheus
+        url: "ref+sops://src/secrets.yml#/mimir/url"
+        basicAuth: true
+        basicAuthUser: "ref+sops://src/secrets.yml#/mimir/username"
+        secureJsonData:
+          basicAuthPassword: "ref+sops://src/secrets.yml#/mimir/password"
+
+---
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: datasource-loki
+  namespace: grafana
+  labels:
+    grafana_datasource: "1"
+data:
+  loki.yaml: |
+    apiVersion: 1
+
+    datasources:
+      - name: Loki
+        type: loki
+        url: "ref+sops://src/secrets.yml#/loki/url"
+        basicAuth: true
+        basicAuthUser: "ref+sops://src/secrets.yml#/loki/username"
+        secureJsonData:
+          basicAuthPassword: "ref+sops://src/secrets.yml#/loki/password"
+---
 apiVersion: v1
 kind: Namespace
 metadata:
