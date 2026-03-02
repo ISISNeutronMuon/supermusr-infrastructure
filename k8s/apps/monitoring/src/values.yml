@@ -1,0 +1,44 @@
+---
+cluster:
+  name: test-musr
+
+destinations:
+  - name: grafana-cloud-prometheus
+    type: prometheus
+    url: "ref+sops://src/secrets.yml#/mimir/url"
+    auth:
+      type: basic
+      username: "ref+sops://src/secrets.yml#/mimir/username"
+      password: "ref+sops://src/secrets.yml#/mimir/password"
+
+  - name: grafana-cloud-loki
+    type: loki
+    url: "ref+sops://src/secrets.yml#/loki/url"
+    auth:
+      type: basic
+      username: "ref+sops://src/secrets.yml#/loki/username"
+      password: "ref+sops://src/secrets.yml#/loki/password"
+
+annotationAutodiscovery:
+  enabled: true
+  annotations:
+    scrape: prometheus.io/scrape
+    metricsScheme: prometheus.io/scheme
+    metricsPath: prometheus.io/path
+    metricsPortNumber: prometheus.io/port
+
+nodeLogs:
+  enabled: true
+podLogs:
+  enabled: true
+clusterEvents:
+  enabled: true
+clusterMetrics:
+  enabled: true
+
+alloy-metrics:
+  enabled: true
+alloy-logs:
+  enabled: true
+alloy-singleton:
+  enabled: true

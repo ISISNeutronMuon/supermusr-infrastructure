@@ -1,0 +1,6 @@
+defaultVaultConnection:
+  enabled: true
+  address: "https://secrets.isis.rl.ac.uk"
+
+tests:
+  enabled: false

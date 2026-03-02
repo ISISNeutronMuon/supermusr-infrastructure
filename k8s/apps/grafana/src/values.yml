@@ -1,0 +1,25 @@
+testFramework:
+  enabled: false
+
+admin:
+  existingSecret: admin-creds
+  userKey: username
+  passwordKey: password
+
+sidecar:
+  datasources:
+    enabled: true
+    searchNamespace: "ALL"
+  dashboards:
+    enabled: true
+    searchNamespace: "ALL"
+  alerts:
+    enabled: false
+    searchNamespace: "ALL"
+
+persistence:
+  enabled: true
+
+grafana.ini:
+  server:
+    root_url: "https://ndw2982.isis.cclrc.ac.uk/grafana/"

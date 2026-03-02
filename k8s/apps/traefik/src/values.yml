@@ -1,0 +1,22 @@
+logs:
+  general:
+    level: INFO
+
+ports:
+  traefik:
+    port: 9000
+    protocol: TCP
+    expose:
+      default: false
+  web:
+    port: 8000
+    protocol: TCP
+    expose:
+      default: true
+    exposedPort: 80
+  websecure:
+    port: 8443
+    protocol: TCP
+    expose:
+      default: true
+    exposedPort: 443

@@ -1,0 +1,105 @@
+#
+# This is a generated file!
+#
+
+---
+apiVersion: secrets.hashicorp.com/v1beta1
+kind: VaultStaticSecret
+metadata:
+  name: archive-credentials
+  namespace: digital-muon-pipeline
+spec:
+  type: kv-v2
+  refreshAfter: 30s
+  vaultAuthRef: static-auth
+
+  mount: digital-muon
+  path: isis_archive
+  destination:
+    name: archive-credentials
+    overwrite: true
+    create: true
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: digital-muon-pipeline
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: vault-op
+  namespace: digital-muon-pipeline
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: service-account-read
+  namespace: digital-muon-pipeline
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: service-account-read
+subjects:
+  - kind: ServiceAccount
+    name: vault-op
+    namespace: digital-muon-pipeline
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: service-account-read
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: system:auth-delegator
+subjects:
+  - kind: ServiceAccount
+    name: vault-op
+    namespace: digital-muon-pipeline
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: service-account-read
+  namespace: digital-muon-pipeline
+rules:
+  - apiGroups: [""]
+    resources: ["serviceaccounts"]
+    verbs: ["get", "watch", "list"]
+  - apiGroups: ["authentication.k8s.io"]
+    resources: ["tokenreviews"]
+    verbs: ["create"]
+  - apiGroups: [ "authentication.k8s.io" ]
+    resources: [ "subjectaccessreviews" ]
+    verbs: [ "create" ]
+
+---
+apiVersion: secrets.hashicorp.com/v1beta1
+kind: VaultAuth
+metadata:
+  name: static-auth
+  namespace: digital-muon-pipeline
+spec:
+  method: kubernetes
+  mount: digital-muon
+  allowedNamespaces:
+    - "*"
+  kubernetes:
+    role: cluster
+    serviceAccount: vault-op
+    audiences:
+      - vault
+      - https://kubernetes.default.svc.cluster.local
+
+---
+apiVersion: secrets.hashicorp.com/v1beta1
+kind: VaultConnection
+metadata:
+  name: default
+  namespace: digital-muon-pipeline
+spec:
+  address: "https://secrets.isis.rl.ac.uk"
