@@ -5,7 +5,7 @@ cluster:
 destinations:
   - name: grafana-cloud-prometheus
     type: prometheus
-    url: "ref+sops://src/secrets.yml#/mimir/url"
+    url: "ref+sops://src/secrets.yml#/mimir/url_push"
     auth:
       type: basic
       username: "ref+sops://src/secrets.yml#/mimir/username"
@@ -13,7 +13,7 @@ destinations:
 
   - name: grafana-cloud-loki
     type: loki
-    url: "ref+sops://src/secrets.yml#/loki/url"
+    url: "ref+sops://src/secrets.yml#/loki/url_push"
     auth:
       type: basic
       username: "ref+sops://src/secrets.yml#/loki/username"

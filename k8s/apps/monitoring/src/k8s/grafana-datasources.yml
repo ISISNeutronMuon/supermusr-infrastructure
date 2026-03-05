@@ -13,7 +13,9 @@ data:
     datasources:
       - name: Prometheus
         type: prometheus
-        url: "ref+sops://src/secrets.yml#/mimir/url"
+        url: "ref+sops://src/secrets.yml#/mimir/url_query"
+        jsonData:
+          timeout: 15
         basicAuth: true
         basicAuthUser: "ref+sops://src/secrets.yml#/mimir/username"
         secureJsonData:
@@ -34,7 +36,9 @@ data:
     datasources:
       - name: Loki
         type: loki
-        url: "ref+sops://src/secrets.yml#/loki/url"
+        url: "ref+sops://src/secrets.yml#/loki/url_query"
+        jsonData:
+          timeout: 15
         basicAuth: true
         basicAuthUser: "ref+sops://src/secrets.yml#/loki/username"
         secureJsonData:
