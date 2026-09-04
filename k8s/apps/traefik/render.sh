@@ -11,7 +11,7 @@
     traefik \
     traefik \
     --repo https://helm.traefik.io/traefik \
-    --version "37.1.1" \
+    --version "41.4.0" \
     --namespace traefik \
     --include-crds \
     --values src/values.yml
